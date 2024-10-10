@@ -1,0 +1,22 @@
+/* 1 */
+:root {
+    --font-color: #1F1F39;
+    --background-color: #eee;
+    --link-color: cornflowerblue;
+}
+
+/* 2 */
+[data-theme="dark"] {
+    --font-color: #ffffff;
+    --background-color: #1F1F39;
+    --link-color: lightblue;
+}
+
+body {
+    color: var(--font-color);
+    background-color: var(--background-color);
+}
+
+a {
+    color: var(--link-color);
+}
