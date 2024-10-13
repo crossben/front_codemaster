@@ -5,6 +5,13 @@ import './index.css'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import Home from './pages';
+import User from './pages/users/user';
+import Course from './pages/courses/course';
+import Instructor from './pages/instructors/instructor';
+import Dashboard from './pages/dashboard/dashboard';
 
 // Import your publishable key
 const PUBLISHABLE_KEY = "pk_test_dmFzdC1pbXBhbGEtODkuY2xlcmsuYWNjb3VudHMuZGV2JA"
@@ -28,8 +35,28 @@ const App: React.FC = () => {
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/app",
     element: <App />,
+  },
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/users",
+    element: <User />,
+  },
+  {
+    path: "/courses",
+    element: <Course />,
+  },
+  {
+    path: "/instructors",
+    element: <Instructor />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
   },
 ]);
 
