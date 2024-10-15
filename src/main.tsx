@@ -12,6 +12,7 @@ import User from './pages/users/user';
 import Course from './pages/courses/course';
 import Instructor from './pages/instructors/instructor';
 import Dashboard from './pages/dashboard/dashboard';
+import Header from './shared/header';
 
 // Import your publishable key
 const PUBLISHABLE_KEY = "pk_test_dmFzdC1pbXBhbGEtODkuY2xlcmsuYWNjb3VudHMuZGV2JA"
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl="/">
+      <Header />
       <RouterProvider router={router} />
     </ClerkProvider>
   </StrictMode>,

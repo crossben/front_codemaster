@@ -2,110 +2,130 @@ import Sidebar from "../sidebar/sidebar";
 import { FaUsers } from "react-icons/fa";
 import { MdDeleteOutline, MdOutlineEdit, MdOutlineRemoveRedEye, MdOutlineAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect, useState, useCallback } from 'react';
+import * as UserService from '@/services/user.service';
+import { ScaleLoaderC } from '@/components/loader';
 
 const User: React.FC = () => {
+    interface user {
+        _id : any;
+        uid: any;
+        firstname: string;
+        lastname: string;
+        email: string;
+        phoneNumber?: string;
+        googleId?: string;
+        password?: string;
+        profileImageUrl?: string;
+        role: string;
+        enrolledToCourses?: any[];
+        emailVerified?: boolean;
+        phoneNumberVerified?: boolean;
+    }
+
+    const [users, setUsers] = useState<user[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+
+    const getUser = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await UserService.getUsers();
+            if (response && response.data) {
+                setUsers(response.data.users);
+                console.log(response.data);
+            } else {
+                setError("Failed to fetch users.");
+            }
+        } catch (error) {
+            console.error("Error fetching users:", error);
+            setError("Error fetching users.");
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        getUser();
+    }, [getUser]);
+
     const navigate = useNavigate();
     return (
         <div className="row">
             <div className="col-2">
                 <Sidebar />
             </div>
-            <div className="container col-8 p-3 mt-5">
-                <div className="row d-flex justify-content-center">
-                    <div className="col-12 col-md-8 col-lg-12 mb-4">
-                        <div className="card h-100 shadow-sm hover-shadow transition">
-                            <div className="card-body d-flex flex-column">
-                                <h5 className="card-title text-primary">Current Users</h5>
-                                <div className="d-flex align-items-center justify-content-between mb-3">
-                                    <i className="card-text text-primary fs-2"><FaUsers /></i>
-                                    <p className="card-text fs-4 fw-bold">52</p>
+            <div className="container col-8 p-3 mt-3">
+                {loading ? (
+                    <div className="d-flex justify-content-center">
+                        <ScaleLoaderC />
+                    </div>
+                ) : (
+                    <>
+                        <div className="row d-flex justify-content-center">
+                            <div className="col-12 col-md-8 col-lg-12 mb-4">
+                                <div className="card h-100 shadow-sm hover-shadow transition">
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title text-primary">Current Users</h5>
+                                        <div className="d-flex align-items-center justify-content-between mb-3">
+                                            <i className="card-text text-primary fs-2"><FaUsers /></i>
+                                            <p className="card-text fs-4 fw-bold">{users.length}</p>
+                                        </div>
+                                        <p className="card-text mt-auto">Manage and view all registered users on the platform. Monitor user activity and engagement.</p>
+                                    </div>
                                 </div>
-                                <p className="card-text mt-auto">Manage and view all registered users on the platform. Monitor user activity and engagement.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <form className="d-flex">
-                        <div className="input-group">
-                            <input type="text" className="form-control me-2" placeholder="Search" />
-                            <button className="btn btn-primary">Search</button>
+                        {error && <div className="alert alert-danger">{error}</div>}
+                        <div className="d-flex justify-content-between">
+                            <form className="d-flex">
+                                <div className="input-group">
+                                    <input type="text" className="form-control me-2" placeholder="Search" />
+                                    <button className="btn btn-primary">Search</button>
+                                </div>
+                            </form>
+                            <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddUserModal">
+                                <MdOutlineAdd />
+                            </button>
                         </div>
-                    </form>
-                    <button className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddUserModal">
-                        <MdOutlineAdd />
-                    </button>
-                </div>
-                <table className="mt-5 table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Avatar</th>
-                            <th>Nom</th>
-                            <th>Prenom</th>
-                            <th>Email</th>
-                            <th>numero</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr onClick={() => navigate("/users/1")}>
-                            <td>
-                                <img src="https://via.placeholder.com/50" alt="Avatar" className="rounded-circle" /></td>
-                            <td>Doe</td>
-                            <td>John</td>
-                            <td>john.doe@example.com</td>
-                            <td>+1 234 567 8901</td>
-                            <td>
-                                <a href="#" className="btn btn-sm">
-                                    <MdOutlineRemoveRedEye />
-                                </a>
-                                <a href="#" className="btn btn-sm  me-2">
-                                    <MdOutlineEdit />
-                                </a>
-                                <a href="#" className="btn btn-sm">
-                                    <MdDeleteOutline />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr onClick={() => navigate("/users/2")}>
-                            <td><img src="https://via.placeholder.com/50" alt="Avatar" className="rounded-circle" /></td>
-                            <td>Smith</td>
-                            <td>Jane</td>
-                            <td>jane.smith@example.com</td>
-                            <td>+1 987 654 3210</td>
-                            <td>
-                                <a href="#" className="btn btn-sm">
-                                    <MdOutlineRemoveRedEye />
-                                </a>
-                                <a href="#" className="btn btn-sm me-2">
-                                    <MdOutlineEdit />
-                                </a>
-                                <a href="#" className="btn btn-sm">
-                                    <MdDeleteOutline />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr onClick={() => navigate("/users/3")}>
-                            <td><img src="https://via.placeholder.com/50" alt="Avatar" className="rounded-circle" /></td>
-                            <td>Johnson</td>
-                            <td>Robert</td>
-                            <td>robert.johnson@example.com</td>
-                            <td>+1 456 789 0123</td>
-                            <td>
-                                <a href="#" className="btn btn-sm">
-                                    <MdOutlineRemoveRedEye />
-                                </a>
-                                <a href="#" className="btn btn-sm me-2">
-                                    <MdOutlineEdit />
-                                </a>
-                                <a href="#" className="btn btn-sm">
-                                    <MdDeleteOutline />
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <table className="mt-5 table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Avatar</th>
+                                    <th>Nom</th>
+                                    <th>Prenom</th>
+                                    <th>Email</th>
+                                    <th>numero</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(users) && users.map((user, index) => (
+                                    <tr key={index} onClick={() => navigate(`/users/${user._id}`)}>
+                                        <td>
+                                            <img src={user.profileImageUrl || "https://via.placeholder.com/50"} alt="Avatar" className="rounded-circle" /></td>
+                                        <td>{user.lastname}</td>
+                                        <td>{user.firstname}</td>
+                                        <td>{user.email}</td>
+                                        <td>{user.phoneNumber || "N/A"}</td>
+                                        <td>
+                                            <a href="#" className="btn btn-sm">
+                                                <MdOutlineRemoveRedEye />
+                                            </a>
+                                            <a href="#" className="btn btn-sm me-2">
+                                                <MdOutlineEdit />
+                                            </a>
+                                            <a href="#" className="btn btn-sm">
+                                                <MdDeleteOutline />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </>
+                )}
             </div>
             <div className="container col-10 p-3 mt-5">
                 <div className="modal fade" id="AddUserModal" tabIndex={-1} aria-labelledby="AddUserModalLabel" aria-hidden="true">

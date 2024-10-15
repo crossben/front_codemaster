@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { FaUserTie, FaHome, FaTachometerAlt, FaUsers, FaBars, FaBook } from 'react-icons/fa';
+// FaBars
+import { FaUserTie, FaHome, FaTachometerAlt, FaUsers, FaBook } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 interface NavItem {
@@ -19,19 +20,20 @@ const navItems: NavItem[] = [
 ];
 
 const Sidebar: React.FC = () => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+    // setIsCollapsed
+    const [isCollapsed] = useState(false);
     const [activeItem, setActiveItem] = useState(navItems[0].label);
 
-    const toggleSidebar = () => setIsCollapsed(!isCollapsed);
+    // const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
     return (
         <div className={`d-flex flex-column flex-shrink-0 p-3 ${isCollapsed ? 'collapsed' : ''}`} style={{ width: isCollapsed ? '4.5rem' : '280px' }}>
-            <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            {/* <div className="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                 <button className="btn btn-link p-0 me-3" onClick={toggleSidebar}>
                     <FaBars />
                 </button>
                 {!isCollapsed && <span className="fs-4">CodeMaster</span>}
-            </div>
+            </div> */}
             <hr />
             <ul className="nav nav-pills flex-column mb-auto">
                 {navItems.map((item) => (

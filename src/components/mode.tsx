@@ -47,7 +47,6 @@ const DarkMode = () => {
         <input
           type="checkbox"
           id="checkbox"
-
           // 6
           onChange={toggleTheme}
           defaultChecked={defaultDark}

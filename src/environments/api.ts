@@ -11,7 +11,7 @@ import axios from "axios";
  * Create an Axios instance with predefined configuration
  */
 export const api = axios.create({
-    baseURL: process.env.apiUrl,  // Base URL for all requests
+    baseURL: "http://localhost:4000/api",  // Base URL for all requests
     withCredentials: true,  // Allows sending cookies from the browser
 });
 

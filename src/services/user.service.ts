@@ -1,7 +1,7 @@
 import { api } from "@/environments/api";
-import { auth } from "@/firebase/config";
+// import { auth } from "@/firebase/config";
 import { AxiosResponse } from "axios";
-import { ConfirmationResult, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, UserCredential } from "firebase/auth";
+// import { ConfirmationResult, GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, UserCredential } from "firebase/auth";
 
 /**
  * User Authentication and Management Service
@@ -14,15 +14,15 @@ import { ConfirmationResult, GoogleAuthProvider, RecaptchaVerifier, signInWithPh
  * Initiates Google Sign-In process
  * @returns {Promise} A promise that resolves with the sign-in result
  */
-export const signInWithGoogleFn = (): Promise<UserCredential> => {
-    try {
-        const provider = new GoogleAuthProvider();
-        return signInWithPopup(auth, provider);
-    } catch (error) {
-        console.error("Error signing in with Google:", error);
-        throw error;
-    }
-}
+// export const signInWithGoogleFn = (): Promise<UserCredential> => {
+//     try {
+//         const provider = new GoogleAuthProvider();
+//         return signInWithPopup(auth, provider);
+//     } catch (error) {
+//         console.error("Error signing in with Google:", error);
+//         throw error;
+//     }
+// }
 
 /**
  * Initiates Phone Number Sign-In process
@@ -30,14 +30,14 @@ export const signInWithGoogleFn = (): Promise<UserCredential> => {
  * @param {RecaptchaVerifier} appVerifier - The reCAPTCHA verifier instance
  * @returns {Promise} A promise that resolves with the sign-in result
  */
-export const signInWithPhoneNumberFn = (phoneNumber: string, appVerifier: RecaptchaVerifier): Promise<ConfirmationResult> => {
-    try {
-        return signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-    } catch (error) {
-        console.error("Error signing in with phone number:", error);
-        throw error;
-    }
-}
+// export const signInWithPhoneNumberFn = (phoneNumber: string, appVerifier: RecaptchaVerifier): Promise<ConfirmationResult> => {
+//     try {
+//         return signInWithPhoneNumber(auth, phoneNumber, appVerifier);
+//     } catch (error) {
+//         console.error("Error signing in with phone number:", error);
+//         throw error;
+//     }
+// }
 
 /**
  * Registers a new user
@@ -93,6 +93,14 @@ export const logoutFn = (): Promise<AxiosResponse<any, any>> => {
 export const getUserDataFn = (id: any): Promise<AxiosResponse<any, any>> => {
     try {
         return api.get(`/users/${id}`);
+    } catch (error) {
+        console.error("Error getting user data:", error);
+        throw error;
+    }
+}
+export const getUsers = (): Promise<AxiosResponse<any, any>> => {
+    try {
+        return api.get(`/user/`);
     } catch (error) {
         console.error("Error getting user data:", error);
         throw error;
