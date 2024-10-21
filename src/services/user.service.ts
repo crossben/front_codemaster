@@ -41,16 +41,16 @@ import { AxiosResponse } from "axios";
 
 /**
  * Registers a new user
- * @param {string} nom - User's last name
- * @param {string} prenom - User's first name
+ * @param {string} firstname - User's last name
+ * @param {string} lastname - User's first name
  * @param {string} email - User's email address
- * @param {string} telephone - User's phone number
+ * @param {string} phoneNumber - User's phone number
  * @param {string} password - User's password
  * @returns {Promise} A promise that resolves with the registration result
  */
-export const signInFn = (nom: string, prenom: string, email: string, telephone: string, password: string): Promise<AxiosResponse<any, any>> => {
+export const signInFn = (firstname: string, lastname: string, email: string, phoneNumber: any, password: string, profileImageUrl : any): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.post('/users', { nom, prenom, email, telephone, password });
+        return api.post('/user/register-api', { firstname, lastname, email, phoneNumber, password, profileImageUrl });
     } catch (error) {
         console.error("Error signing in:", error);
         throw error;
@@ -65,7 +65,7 @@ export const signInFn = (nom: string, prenom: string, email: string, telephone: 
  */
 export const loginFn = (email: string, password: string): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.post('/users/login', { email, password });
+        return api.post('/user/login-api', { email, password });
     } catch (error) {
         console.error("Error logging in:", error);
         throw error;
@@ -92,7 +92,7 @@ export const logoutFn = (): Promise<AxiosResponse<any, any>> => {
  */
 export const getUserDataFn = (id: any): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.get(`/users/${id}`);
+        return api.get(`/user/id/${id}`);
     } catch (error) {
         console.error("Error getting user data:", error);
         throw error;
@@ -110,15 +110,15 @@ export const getUsers = (): Promise<AxiosResponse<any, any>> => {
 /**
  * Updates user data
  * @param {any} id - The user's ID
- * @param {string} nom - User's last name
- * @param {string} prenom - User's first name
+ * @param {string} firstname - User's last name
+ * @param {string} lastname - User's first name
  * @param {string} email - User's email address
- * @param {string} telephone - User's phone number
+ * @param {string} phoneNumber - User's phone number
  * @returns {Promise} A promise that resolves with the updated user data
  */
-export const updateUserDataFn = (id: any, nom: string, prenom: string, email: string, telephone: string): Promise<AxiosResponse<any, any>> => {
+export const updateUserDataFn = (id: any, firstname: string, lastname: string, email: string, phoneNumber: string): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.put(`/users/${id}`, { nom, prenom, email, telephone });
+        return api.put(`/user/${id}`, { firstname, lastname, email, phoneNumber });
     } catch (error) {
         console.error("Error updating user data:", error);
         throw error;
@@ -132,7 +132,7 @@ export const updateUserDataFn = (id: any, nom: string, prenom: string, email: st
  */
 export const deleteUserDataFn = (id: any): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.delete(`/users/${id}`);
+        return api.delete(`/user/${id}`);
     } catch (error) {
         console.error("Error deleting user data:", error);
         throw error;

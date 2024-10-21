@@ -2,30 +2,20 @@ import Sidebar from "../sidebar/sidebar";
 import { FaUsers } from "react-icons/fa";
 import { MdDeleteOutline, MdOutlineEdit, MdOutlineRemoveRedEye, MdOutlineAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, FormEvent } from 'react';
 import * as UserService from '@/services/user.service';
 import { ScaleLoaderC } from '@/components/loader';
+import { IUser } from "@/interfaces/interface";
 
 const User: React.FC = () => {
-    interface user {
-        _id : any;
-        uid: any;
-        firstname: string;
-        lastname: string;
-        email: string;
-        phoneNumber?: string;
-        googleId?: string;
-        password?: string;
-        profileImageUrl?: string;
-        role: string;
-        enrolledToCourses?: any[];
-        emailVerified?: boolean;
-        phoneNumberVerified?: boolean;
-    }
-
-    const [users, setUsers] = useState<user[]>([]);
+    const [users, setUsers] = useState<IUser[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    // const [query, setQuery] = useState('');
+
+    // const handleSearch = async () => {
+
+    // }
 
     const getUser = useCallback(async () => {
         setLoading(true);
@@ -34,7 +24,8 @@ const User: React.FC = () => {
             const response = await UserService.getUsers();
             if (response && response.data) {
                 setUsers(response.data.users);
-                console.log(response.data);
+                // console.log(response.data);
+                localStorage.setItem('users_lenght', (response.data.users.length).toString());
             } else {
                 setError("Failed to fetch users.");
             }
@@ -45,6 +36,31 @@ const User: React.FC = () => {
             setLoading(false);
         }
     }, []);
+
+    const handleUserCreate = async (e: FormEvent) => {
+        e.preventDefault();
+        try {
+            const firstname = (document.getElementById("firstname") as HTMLInputElement).value;
+            const lastname = (document.getElementById("lastname") as HTMLInputElement).value;
+            const email = (document.getElementById("email") as HTMLInputElement).value;
+            const phoneNumber = (document.getElementById("phoneNumber") as HTMLInputElement).value;
+            // const googleId = (document.getElementById("googleId") as HTMLInputElement).value;
+            const password = (document.getElementById("password") as HTMLInputElement).value;
+            const profileImageUrl = (document.getElementById("profileImageUrl") as HTMLInputElement).value;
+
+            const response = await UserService.signInFn(firstname, lastname, email, phoneNumber, password, profileImageUrl);
+            if (response && response.data) {
+                console.log(response.data);
+
+                getUser();
+
+            } else {
+                console.error("Failed to create user.");
+            }
+        } catch (error) {
+            console.error("Error creating user:", error);
+        }
+    }
 
     useEffect(() => {
         getUser();
@@ -100,11 +116,11 @@ const User: React.FC = () => {
                                     <th>Actions</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody className="align-content-center align-content-center">
                                 {Array.isArray(users) && users.map((user, index) => (
-                                    <tr key={index} onClick={() => navigate(`/users/${user._id}`)}>
-                                        <td>
-                                            <img src={user.profileImageUrl || "https://via.placeholder.com/50"} alt="Avatar" className="rounded-circle" /></td>
+                                    <tr key={index} onClick={() => navigate(`/user/${user._id}`)}>
+                                        <td className="">
+                                            <img src={user.profileImageUrl || "https://via.placeholder.com/50"} alt="Avatar" className="rounded-circle img-fluid" width={50} /></td>
                                         <td>{user.lastname}</td>
                                         <td>{user.firstname}</td>
                                         <td>{user.email}</td>
@@ -136,7 +152,7 @@ const User: React.FC = () => {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                <form className="p-3">
+                                <form onClick={handleUserCreate} className="p-3">
                                     <div className="row mb-3">
                                         <div className="col-md-6">
                                             <label htmlFor="firstname" className="form-label">First Name</label>
