@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback, FormEvent } from 'react';
 import * as UserService from '@/services/user.service';
 import { ScaleLoaderC } from '@/components/loader';
-import { IUser } from "@/interfaces/interface";
+import { IUser } from "@/types/interface";
 
 const User: React.FC = () => {
     const [users, setUsers] = useState<IUser[]>([]);

@@ -3,28 +3,11 @@ import { useParams } from "react-router-dom";
 import { getUserDataFn } from "@/services/user.service";
 import Sidebar from "../sidebar/sidebar";
 import { ScaleLoaderC } from "@/components/loader";
+import { IUser } from "@/types/interface";
 
 const SingleProfil = () => {
     const { id } = useParams<{ id: string }>();
-
-    interface Course {
-        _id: string;
-        title: string;
-    }
-
-    interface UserData {
-        uid: string;
-        firstname: string;
-        lastname: string;
-        email: string;
-        phoneNumber?: string;
-        googleId?: string;
-        profileImageUrl?: string;
-        role?: string;
-        enrolledToCourses?: Course[];
-    }
-
-    const [data, setData] = useState<UserData | null>(null);
+    const [data, setData] = useState<IUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = useCallback(async () => {
@@ -83,16 +66,25 @@ const SingleProfil = () => {
                             />
                             <ul className="list-group list-group-flush w-100">
                                 <li className="list-group-item">
+                                    <strong>Uid:</strong> {data.uid}
+                                </li>
+                                <li className="list-group-item">
                                     <strong>Email:</strong> {data.email}
+                                </li>
+                                <li className="list-group-item">
+                                    <strong>Email verifier:</strong> {data.emailVerified || "Non"}
                                 </li>
                                 <li className="list-group-item">
                                     <strong>Téléphone:</strong> {data.phoneNumber || "Non renseigné"}
                                 </li>
                                 <li className="list-group-item">
-                                    <strong>Rôle:</strong> {data.role || "Non disponible"}
+                                    <strong>Rôle:</strong> {data.role ? "Etudiant" : "Non disponible" }
                                 </li>
                                 <li className="list-group-item">
                                     <strong>Google ID:</strong> {data.googleId || "Non disponible"}
+                                </li>
+                                <li className="list-group-item">
+                                    <strong>Numero verifier:</strong> {data.phoneNumberVerified || "Non"}
                                 </li>
                                 <li className="list-group-item">
                                     <strong>Cours inscrits:</strong>
@@ -104,6 +96,13 @@ const SingleProfil = () => {
                                         ) : (
                                             <li>Aucun cours</li>
                                         )}
+                                    </ul>
+                                </li>
+                                <li className="list-group-item">
+                                    <strong>Timestapms :</strong>
+                                    <ul className="mt-2">
+                                        <li key="createdAt">Créé le: {new Date(data.createdAt).toLocaleString()}</li>
+                                        <li key="updatedAt">Mis à jour le: {new Date(data.updatedAt).toLocaleString()}</li>
                                     </ul>
                                 </li>
                             </ul>

@@ -3,30 +3,14 @@ import { useParams } from "react-router-dom";
 import Sidebar from "../sidebar/sidebar";
 import { ScaleLoaderC } from "@/components/loader";
 import { getInstructorDataFn } from "@/services/instructor.service";
+import { IInstructor } from "@/types/interface";
 
 const SingleProfilI = () => {
     const { id } = useParams<{ id: string }>();
-
-    interface Course {
-        _id: string;
-        title: string;
-    }
-
-    interface UserData {
-        uid: string;
-        firstname: string;
-        lastname: string;
-        email: string;
-        phoneNumber?: string;
-        googleId?: string;
-        profileImageUrl?: string;
-        role?: string;
-        enrolledToCourses?: Course[];
-    }
-
-    const [data, setData] = useState<UserData | null>(null);
+    const [data, setData] = useState<IInstructor | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    // Fonction pour récupérer les données de l'instructeur
     const fetchData = useCallback(async () => {
         setIsLoading(true);
         try {
@@ -83,6 +67,9 @@ const SingleProfilI = () => {
                             />
                             <ul className="list-group list-group-flush w-100">
                                 <li className="list-group-item">
+                                    <strong>Uid:</strong> {data.uid}
+                                </li>
+                                <li className="list-group-item">
                                     <strong>Email:</strong> {data.email}
                                 </li>
                                 <li className="list-group-item">
@@ -95,15 +82,22 @@ const SingleProfilI = () => {
                                     <strong>Google ID:</strong> {data.googleId || "Non disponible"}
                                 </li>
                                 <li className="list-group-item">
-                                    <strong>Cours inscrits:</strong>
+                                    <strong>Cours :</strong>
                                     <ul className="mt-2">
-                                        {data.enrolledToCourses && data.enrolledToCourses.length > 0 ? (
-                                            data.enrolledToCourses.map((course) => (
+                                        {data.courses && data.courses.length > 0 ? (
+                                            data.courses.map((course) => (
                                                 <li key={course._id}>{course.title}</li>
                                             ))
                                         ) : (
                                             <li>Aucun cours</li>
                                         )}
+                                    </ul>
+                                </li>
+                                <li className="list-group-item">
+                                    <strong>Timestapms :</strong>
+                                    <ul className="mt-2">
+                                        <li key="createdAt">Créé le: {new Date(data.createdAt).toLocaleString()}</li>
+                                        <li key="updatedAt">Mis à jour le: {new Date(data.updatedAt).toLocaleString()}</li>
                                     </ul>
                                 </li>
                             </ul>

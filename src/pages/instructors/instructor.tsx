@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback, FormEvent } from 'react';
 import * as InstructorService from '@/services/instructor.service';
 import { ScaleLoaderC } from '@/components/loader';
-import { IInstructor } from "@/interfaces/interface";
+import { IInstructor } from "@/types/interface";
 
 const User: React.FC = () => {
     const [instructors, setInstructor] = useState<IInstructor[]>([]);
@@ -88,7 +88,7 @@ const User: React.FC = () => {
                                             <i className="card-text text-primary fs-2"><FaUsers /></i>
                                             <p className="card-text fs-4 fw-bold">{instructors.length}</p>
                                         </div>
-                                        <p className="card-text mt-auto">Manage and view all registered instructors on the platform. Monitor user activity and engagement.</p>
+                                        <p className="card-text mt-auto">Manage and view all registered instructors on the platform.</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 
-export interface IUser {
-    _id : any;
+export type IUser = {
+    _id: any;
     uid: any;
     firstname: string;
     lastname: string;
@@ -13,10 +13,12 @@ export interface IUser {
     enrolledToCourses?: [any];
     emailVerified?: boolean;
     phoneNumberVerified?: boolean;
+    createdAt: any;
+    updatedAt: any;
 }
 
-export interface IInstructor {
-    _id : any;
+export type IInstructor = {
+    _id: any;
     uid: any;
     firstname: string;
     lastname: string;
@@ -27,23 +29,25 @@ export interface IInstructor {
     profileImageUrl: string;
     role: string;
     courses: ICourse[];
+    createdAt: any;
+    updatedAt: any;
 }
 
 
-export interface IModule {
-    _id : any;
+export type IModule = {
+    _id: any;
     name: string;
     description?: string;
     contenu?: string;
 }
-export interface IRessource {
-    _id : any;
+export type IRessource = {
+    _id: any;
     title: string;
     url?: string;
 }
 
-export interface IQuiz {
-    _id : any;
+export type IQuiz = {
+    _id: any;
     title: string;
     questions: {
         correctAnswer: string;
@@ -52,8 +56,8 @@ export interface IQuiz {
     };
 }
 
-export interface ICourse {
-    _id : any;
+export type ICourse = {
+    _id: any;
     uid: any;
     title: string;
     description: string;
@@ -73,8 +77,8 @@ export interface ICourse {
 }
 
 
-export interface IEnrolledCourse {
-    _id : any;
+export type IEnrolledCourse = {
+    _id: any;
     userId: any;
     courseId: any;
     courseTitle: string; // Added for quick reference
