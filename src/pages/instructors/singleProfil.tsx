@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, FC } from "react";
 import { useParams } from "react-router-dom";
 import Sidebar from "../sidebar/sidebar";
 import { ScaleLoaderC } from "@/components/loader";
 import { getInstructorDataFn } from "@/services/instructor.service";
-import { IInstructor } from "@/types/interface";
+import { IInstructor } from "@/types/types";
 
-const SingleProfilI = () => {
+const SingleProfilI: FC = () => {
     const { id } = useParams<{ id: string }>();
     const [data, setData] = useState<IInstructor | null>(null);
     const [isLoading, setIsLoading] = useState(true);

@@ -2,12 +2,12 @@ import Sidebar from "../sidebar/sidebar";
 import { FaUsers } from "react-icons/fa";
 import { MdDeleteOutline, MdOutlineEdit, MdOutlineRemoveRedEye, MdOutlineAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useCallback, FormEvent } from 'react';
+import { useEffect, useState, useCallback, FormEvent, FC } from 'react';
 import * as InstructorService from '@/services/instructor.service';
 import { ScaleLoaderC } from '@/components/loader';
-import { IInstructor } from "@/types/interface";
+import { IInstructor } from "@/types/types";
 
-const User: React.FC = () => {
+const User: FC = () => {
     const [instructors, setInstructor] = useState<IInstructor[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

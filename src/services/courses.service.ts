@@ -1,9 +1,9 @@
 import { api } from "@/environments/api";
 import { AxiosResponse } from "axios";
 
-export const getCoursesFn = (): Promise<AxiosResponse<any, any>> => {
+export const getCourses = (): Promise<AxiosResponse<any, any>> => {
     try {
-        return api.get('/courses');
+        return api.get('/course');
     } catch (error) {
         console.error("Error getting courses:", error);
         throw error;

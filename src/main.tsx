@@ -44,6 +44,10 @@ const router = createBrowserRouter([
     path: "/instructor/:id",
     element: <SingleProfilI />,
   },
+  {
+    path: "/course/:id",
+    element: <SingleProfilI />,
+  },
 ]);
 
 createRoot(document.getElementById('root')!).render(

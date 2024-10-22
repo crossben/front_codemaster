@@ -1,11 +1,11 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, FC } from "react";
 import { useParams } from "react-router-dom";
 import { getUserDataFn } from "@/services/user.service";
 import Sidebar from "../sidebar/sidebar";
 import { ScaleLoaderC } from "@/components/loader";
-import { IUser } from "@/types/interface";
+import { IUser } from "@/types/types";
 
-const SingleProfil = () => {
+const SingleProfil: FC = () => {
     const { id } = useParams<{ id: string }>();
     const [data, setData] = useState<IUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -78,7 +78,7 @@ const SingleProfil = () => {
                                     <strong>Téléphone:</strong> {data.phoneNumber || "Non renseigné"}
                                 </li>
                                 <li className="list-group-item">
-                                    <strong>Rôle:</strong> {data.role ? "Etudiant" : "Non disponible" }
+                                    <strong>Rôle:</strong> {data.role ? "Etudiant" : "Non disponible"}
                                 </li>
                                 <li className="list-group-item">
                                     <strong>Google ID:</strong> {data.googleId || "Non disponible"}
