@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Disallow crawling of administrative areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /login/
+Disallow: /signup/
+
+# Allow crawling of public areas
+Allow: /public/
+Allow: /blog/
+Allow: /products/
+
+# Crawl-delay directive (optional, adjust as needed)
+Crawl-delay: 10
+
+# Sitemap location
+Sitemap: https://www.example.com/sitemap.xml

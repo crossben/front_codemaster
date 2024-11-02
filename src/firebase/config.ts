@@ -1,21 +1,46 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// /**
+//  * Firebase Configuration and Initialization
+//  * 
+//  * This module sets up and initializes Firebase for the application.
+//  * It includes configuration for Firebase services and exports initialized instances.
+//  */
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyBUQabtRqc0LGPgU8q9QeuA61o2WFu5Ctc",
-  authDomain: "codemaster-6141c.firebaseapp.com",
-  projectId: "codemaster-6141c",
-  storageBucket: "codemaster-6141c.appspot.com",
-  messagingSenderId: "456978068931",
-  appId: "1:456978068931:web:526759fa0e374ff0747976",
-  measurementId: "G-NZ6C1J931Q"
-};
+// // Import necessary Firebase functions
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// import { getAuth } from "firebase/auth";
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const analytics = getAnalytics(app);
+// // Firebase configuration object
+// // Contains API keys and identifiers for the Firebase project
+// // Note: In a production environment, these values should be stored securely
+// // and not exposed in the client-side code
+// const firebaseConfig = {
+//   apiKey: process.env.FIREBASE_API_KEY,
+//   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.FIREBASE_APP_ID,
+//   measurementId: process.env.FIREBASE_MEASUREMENT_ID
+// };
+
+// // Initialize Firebase application
+// const app = initializeApp(firebaseConfig);
+
+// // Initialize and export Firebase services
+// // These can be imported and used in other parts of the application
+
+// /**
+//  * Firebase Analytics instance
+//  * Used for collecting and analyzing app usage data
+//  */
+// export const analytics = getAnalytics(app);
+
+// /**
+//  * Firebase Authentication instance
+//  * Used for user authentication services
+//  */
+// export const auth = getAuth(app);
+
+// // TODO: Add initialization for other Firebase services as needed
+// // Examples: Firestore, Realtime Database, Cloud Functions, etc.
